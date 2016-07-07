@@ -1,0 +1,8 @@
+select a.name
+from students a , friends b , packages c
+where a.id = b.id
+and b.friend_id = c.id
+and c.salary > (select d.salary
+                  from packages d
+                 where d.id = a.id)
+order by c.salary;
