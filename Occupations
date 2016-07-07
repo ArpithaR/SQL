@@ -1,0 +1,14 @@
+# Occupations
+HackerRank SQL challenges
+select  max(case when occupation='Doctor' then name end) as doctor,
+        max(case when occupation='Professor' then name end) as prof,
+        max(case when occupation='Singer' then name end) as singer,
+        max(case when occupation='Actor' then name end) as actor
+       from (
+select name, 
+       occupation,
+       row_number() over(partition by occupation order by name) rn
+  from occupations)
+group by rn
+order by rn
+;
