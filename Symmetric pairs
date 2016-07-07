@@ -1,0 +1,8 @@
+select distinct(s1.*) 
+from functions s1, function s2 
+where s1.x = s2.y 
+and s1.y = s2.x
+and s1.ROWID <> s2.ROWID 
+and s1.x <= s1.y 
+order by s1.x, s1.y
+;
