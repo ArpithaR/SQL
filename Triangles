@@ -1,0 +1,8 @@
+select lpad('*',cnt,' *') 
+from
+(select level as cnt
+from dual
+connect by level <= 40
+order by level desc)
+where mod(cnt,2)=0
+;
