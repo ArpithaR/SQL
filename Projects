@@ -1,0 +1,19 @@
+select a.sd1 as start_date, b.ed1 as end_date
+from (
+      (select sd1, row_number() over (order by sd1) as rn1
+         from (select t1.start_date as sd1, t2.start_date as sd2 
+                from (select * from projects) t1 
+           left join (select * from projects) t2 
+                  on t1.start_date=t2.start_date+1
+               )
+        where sd2 is null) a
+      inner join
+      (select ed1, row_number() over (order by ed1) as rn2
+        from (select t1.end_date as ed1, t2.start_date as sd2 
+                from (select * from projects) t1 
+           left join (select * from projects) t2 
+                  on t1.end_date=t2.start_date
+             ) 
+        where sd2 is null) b
+      on a.rn1 = b.rn2)
+order by (b.ed1-a.sd1), a.sd1;
