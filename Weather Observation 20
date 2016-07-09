@@ -1,0 +1,6 @@
+select round(s.lat_n, 4)
+from station s, (select lat_n, row_number() over(order by lat_n) as rn from station order by lat_n) x
+where x.rn = (select avg(rn) as n 
+                from (select lat_n, row_number() over(order by lat_n) as rn from station order by lat_n))
+and s.lat_n = x.lat_n
+;
