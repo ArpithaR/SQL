@@ -1,0 +1,12 @@
+select n.N
+      ,case 
+        when flag = 1 then 'Leaf'
+        when flag = 0 then 'Root' else 'Inner'
+       end as tree
+ from BST n left join
+        (select a.N, 0 as flag from BST a where exists (select * from BST r where r.p is NULL and r.N = a.N)
+         union
+         select a.N, 1 as flag from BST where a.P is not NULL and not exists (select * from BST b where a.N = b.P)) f
+      on n.N = f.N
+order by N
+;
