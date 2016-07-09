@@ -1,0 +1,5 @@
+select round((abs(d1) + abs(d2)),4)
+from
+(select (min(lat_n) - min(long_w)) as d1,
+        (max(lat_n) - max(long_w)) as d2
+from Station) x;
